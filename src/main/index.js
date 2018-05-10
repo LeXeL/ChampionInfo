@@ -20,9 +20,10 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 720,
     useContentSize: true,
-    width: 480
+    width: 480,
+    titleBarStyle: 'hidden'
   })
-
+  mainWindow.setMenuBarVisibility(false)
   mainWindow.loadURL(winURL)
 
   mainWindow.on('closed', () => {
