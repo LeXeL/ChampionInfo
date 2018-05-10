@@ -35,46 +35,46 @@ export default {
         getPic(index) {
             return require("../assets/Runes/" + index);
         },
-    getRunesInfo(){
-        this.$http.get("http://ddragon.leagueoflegends.com/cdn/8.8.1/data/en_US/runesReforged.json")
-            .then(data => {
-                data.body.forEach(rune => {
-                    let icon = rune.icon.split("/");
-                    this.mapIcon[rune.id.toString()] = icon[icon.length - 1];
-                });
-                this.mapIcon["8000"] = "Precision.png";
-                this.mapIcon["8100"] = "Domination.png";
-                this.mapIcon["8200"] = "Sorcery.png";
-                this.mapIcon["8300"] = "Inspiration.png";
-                this.mapIcon["8400"] = "Resolve.png";
-                localStorage.setItem("mapIcon",JSON.stringify(this.mapIcon));
-                this.getrunes();
-            });
+    async getRunesInfo(){
+      try {
+        let data = await this.$http.get("http://ddragon.leagueoflegends.com/cdn/8.8.1/data/en_US/runesReforged.json")
+        data.body.forEach(rune => {
+        let icon = rune.icon.split("/");
+          this.mapIcon[rune.id.toString()] = icon[icon.length - 1];
+        });
+        this.mapIcon["8000"] = "Precision.png";
+        this.mapIcon["8100"] = "Domination.png";
+        this.mapIcon["8200"] = "Sorcery.png";
+        this.mapIcon["8300"] = "Inspiration.png";
+        this.mapIcon["8400"] = "Resolve.png";
+        localStorage.setItem("mapIcon",JSON.stringify(this.mapIcon));
+        this.getrunes();
+      } catch (e) {
+          console.log(e)
+      }
+    
     },
-    getrunes() {
-      this.$http
-        .get("http://api.champion.gg/v2/champions/" + this.key, {
+    async getrunes() {
+      try {
+        let data = await this.$http.get("http://api.champion.gg/v2/champions/" + this.key, {
           params: {
             champData: "hashes",
             api_key: "1054371153781160d815be1fdbbc7625"
           }
         })
-        .then(data => {
-          data.body.forEach(e => {
-            if (e.hashes.runehash) {
-              this.runes = [];
-              let splitRunes = e.hashes.runehash.highestWinrate.hash.split("-");
-              splitRunes.forEach(rune => {
-                this.runes.push(this.mapIcon[rune]);
-              });
-              var role = ''
-              if (e.role == 'DUO_SUPPORT') role = 'SUPPORT'
-              if (e.role == 'DUO_CARRY') role= 'ADC'
-              else role = e.role
-              this.championsinfo.push({ role: role, runes: this.runes });
-            }
-          });
+        data.body.forEach(e => {
+          if (e.hashes.runehash) {
+            this.runes = [];
+            let splitRunes = e.hashes.runehash.highestWinrate.hash.split("-");
+            splitRunes.forEach(rune => {
+              this.runes.push(this.mapIcon[rune]);
+            });
+            this.championsinfo.push({ role: e.role, runes: this.runes });
+          }
         });
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 };

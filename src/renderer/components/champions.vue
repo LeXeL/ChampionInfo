@@ -25,9 +25,9 @@ export default {
         lolcurrentVersion:''
         };
     },
-    created() {
-        this.$http.get("https://ddragon.leagueoflegends.com/api/versions.json")
-        .then(data => {
+    async created() {
+        try {
+            let data = await this.$http.get("https://ddragon.leagueoflegends.com/api/versions.json")
             let tempsplit = data.body[0].split('.');
             this.lolcurrentVersion = data.body[0];
             this.localVersion = JSON.parse(localStorage.getItem("Version") || '0');
@@ -40,17 +40,21 @@ export default {
             }else{
                 this.getChampions();
             }
-        });
+        } catch (e) {
+            console.log(e)   
+        }
 
     },
     methods: {
-        getChampions(){
+        async getChampions(){
             if (!localStorage.getItem("Champions")) {
-                this.$http.get("http://ddragon.leagueoflegends.com/cdn/" +this.localVersion +"/data/en_US/champion.json")
-                    .then(data => {
-                        this.champions = data.body.data;
-                        localStorage.setItem("Champions",JSON.stringify(this.champions));
-                    });
+                try {
+                    let data = await this.$http.get("http://ddragon.leagueoflegends.com/cdn/" +this.localVersion +"/data/en_US/champion.json")
+                    this.champions = data.body.data;
+                    localStorage.setItem("Champions",JSON.stringify(this.champions));
+                } catch (e) {
+                    console.log(e)
+                }
             }else{
                 this.champions = JSON.parse(localStorage.getItem("Champions"));
             }
