@@ -9,7 +9,7 @@
             <div>
               <h3>Items:</h3>
               <div class="items">
-                <img v-for="items in champion.items" :key="items" v-bind:src="`http://ddragon.leagueoflegends.com/cdn/${localVersion}/img/item/${items}.png`">
+                <img v-for="(items,index) in champion.items" :key="items+index" v-bind:src="`http://ddragon.leagueoflegends.com/cdn/${localVersion}/img/item/${items}.png`">
               </div>
             </div>
             <h3>Skills:</h3>

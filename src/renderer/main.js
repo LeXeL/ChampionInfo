@@ -13,6 +13,8 @@ import Vue2Filters from 'vue2-filters'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vue2-animate/dist/vue2-animate.min.css'
+
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
