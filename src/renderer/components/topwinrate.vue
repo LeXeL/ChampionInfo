@@ -9,24 +9,25 @@
             <span> Filter by: <span v-if="role">{{role | role}}</span><span v-else>ALL</span></span>
             
         </div>
-        <b-table :fields="fields" :items="championWinRatedata | championRole(role)">
-            <template slot="index" slot-scope="data">
-                {{data.index + 1}}
-            </template>
-            <template slot="winRate" slot-scope="data">
-                {{data.item.winRate | percentage}}
-            </template>
-            <template slot="role" slot-scope="data">
-                {{data.item.role | role}}
-            </template>
-            <template slot="championId" slot-scope="data">
-                <router-link v-bind:to="'/info/'+ data.item.championId">
-                    <img :src="'http://ddragon.leagueoflegends.com/cdn/'+ localVersion +'/img/champion/'+ getChampionImageById(data.item.championId)" alt="">
-                    <span> {{getChampionNameById(data.item.championId)}} </span>
-                </router-link>
-            </template>
-            
-        </b-table>
+        <transition name="fadeUp">
+            <b-table :fields="fields" :items="championWinRatedata | championRole(role)">
+                <template slot="index" slot-scope="data">
+                    {{data.index + 1}}
+                </template>
+                <template slot="winRate" slot-scope="data">
+                    {{data.item.winRate | percentage}}
+                </template>
+                <template slot="role" slot-scope="data">
+                    {{data.item.role | role}}
+                </template>
+                <template slot="championId" slot-scope="data">
+                    <router-link v-bind:to="'/info/'+ data.item.championId">
+                        <img :src="'http://ddragon.leagueoflegends.com/cdn/'+ localVersion +'/img/champion/'+ getChampionImageById(data.item.championId)" alt="">
+                        <span> {{getChampionNameById(data.item.championId)}} </span>
+                    </router-link>
+                </template>
+            </b-table>
+        </transition>
     </div>
 </template>
 
