@@ -1,7 +1,7 @@
 {
   "name": "championinfo",
-  "version": "0.0.0",
-  "author": "Diego Rodriguez <lexelez@gmail.com>",
+  "version": "0.0.1-alpha",
+  "author": "Diego Rodriguez <diego.r2892@gmail.com>",
   "description": "A ChampionGG GUI",
   "license": null,
   "main": "./dist/electron/main.js",
