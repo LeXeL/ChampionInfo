@@ -1,17 +1,30 @@
-<template>
-  <div>
-    <navbar></navbar>
-    <div class="container">
-      <transition name="fade">
-        <router-view></router-view>
-      </transition>
-    </div>
+
+  <!-- <div>
+    <v-app id="inspire">
+      <navbar></navbar>
+      <div class="container">
+        <transition name="fade">
+           <v-content>
+            <router-view></router-view>
+           </v-content>
+        </transition>
+      </div>
+      <footer-component></footer-component>
+    </v-app>
+  </div> -->
+  <template>
+  <v-app id="app">
+       <navbar-component></navbar-component>
+    <v-content>
+       <router-view></router-view>
+    </v-content>
     <footer-component></footer-component>
-  </div>
+  </v-app>
 </template>
 
+
 <script>
-import navbar from './components/navbar.vue'
+import navbarComponent from './components/navbar.vue'
 import footerComponent from './components/footer.vue'
 export default {
   
@@ -19,7 +32,7 @@ export default {
     return {};
   },
   components:{
-      'navbar':navbar,
+      navbarComponent,
       footerComponent
       
   },
@@ -31,7 +44,5 @@ export default {
 body{
    background-image: linear-gradient(to top, #c4c5c7 0%, #dcdddf 52%, #ebebeb 100%);
 }
-.container{
-    margin-top: 50px;
-}
+
 </style>

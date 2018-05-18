@@ -1,18 +1,16 @@
 import Vue from 'vue'
-import axios from 'axios'
-
 import App from './App'
-import router from './router'
-import store from './store'
 
-import BootstrapVue  from 'bootstrap-vue'
+import axios from 'axios'
 import VueLodash from 'vue-lodash'
 import VueResource from 'vue-resource'
 import Vue2Filters from 'vue2-filters'
+import Vuetify from 'vuetify'
 
+import router from './router'
+import store from './store'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vuetify/dist/vuetify.min.css'
 import 'vue2-animate/dist/vue2-animate.min.css'
 
 
@@ -21,10 +19,10 @@ Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 //Use package
-Vue.use(BootstrapVue);
-Vue.use(Vue2Filters)
+Vue.use(Vue2Filters);
 Vue.use(VueResource);
 Vue.use(VueLodash, { name: '_' });
+Vue.use(Vuetify);
 
 //Filters
 
@@ -39,5 +37,5 @@ new Vue({
   components: { App },
   router,
   store,
-  template: '<App/>'
+  render: h => h(App)
 }).$mount('#app')
