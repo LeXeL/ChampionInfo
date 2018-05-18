@@ -1,8 +1,11 @@
 <template>
     <div class="container-fluid">
-      <b-tabs>
-        <b-row v-for="champion in championsinfo" :key="champion.name" v-cloak>
-          <b-tab v-bind:title="champion.role | role">
+      <v-tabs> 
+        <div v-for="champion in championsinfo" :key="champion.name" v-cloak>
+          <v-tab>
+            {{champion.role | role}}
+          </v-tab> 
+          <v-tab-item>  
             <br>
             <h3>Runes:</h3>
             <img v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
@@ -14,11 +17,11 @@
             </div>
             <h3>Skills:</h3>
             <span v-for="(skills,index) in champion.skills" :key="index">{{skills}}<span v-if="index+1 < champion.skills.length ">-></span></span>
-          </b-tab>
-        </b-row>
+          </v-tab-item>
+        </div>
         <br>
         <button @click="$router.go(-1)" class="btn">Go Back</button>
-      </b-tabs>
+      </v-tabs>
     </div>
 </template>
 

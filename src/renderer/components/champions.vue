@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <v-container >
         <div class="row show-Champions">
             <input type="text" placeholder="Champion Name" class="form-control searchbar" v-model="name">
             <div v-for="champion in ChampionName" class="col-2 champions center-block" :key="champion.id">
@@ -8,11 +8,11 @@
                         <img class="img-champions align-self-center mr-3" v-bind:src="'http://ddragon.leagueoflegends.com/cdn/'+ localVersion +'/img/champion/'+ champion.image.full ">              
                     </router-link>
                     <br>
-                    <p class="champion-name"> {{champion.name}} </p>
+                    <p class="champion-name "> {{champion.name}} </p>
                 <!-- </transition> -->
             </div>
         </div>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -92,6 +92,8 @@ export default {
 }
 .champion-name{
     text-align: center;
+    font-weight: bold;
+
 }
 .searchbar{
     margin: 10px;

@@ -1,11 +1,12 @@
 <template>
     <div>
-        <v-app>
-            <v-footer app fixed>
-                <span>&copy; 2017</span>
-            </v-footer>
-        </v-app>
-        
+        <v-footer :fixed="true">
+            <v-btn>
+                <v-icon class="grey--text text--darken-3">settings</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <span>{{status}}</span>
+        </v-footer>      
     </div>
 </template>
 
@@ -18,9 +19,11 @@ import electron from 'electron'
             }
         },
         computed:{
-            lucho : function(){
+            status : function(){
                 electron.ipcRenderer.on('message', text =>{
-                    return text;
+                    if (text) return text;
+                    else return "Scanning..."
+
                 })
             }
         }
