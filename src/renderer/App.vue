@@ -1,7 +1,7 @@
 
-  <!-- <div>
-    <v-app id="inspire">
-      <navbar></navbar>
+<template>
+  <div>
+      <navbar-component></navbar-component>
       <div class="container">
         <transition name="fade">
            <v-content>
@@ -10,16 +10,8 @@
         </transition>
       </div>
       <footer-component></footer-component>
-    </v-app>
-  </div> -->
-  <template>
-  <v-app id="app">
-       <navbar-component></navbar-component>
-    <v-content>
-       <router-view></router-view>
-    </v-content>
-    <footer-component></footer-component>
-  </v-app>
+  </div>
+
 </template>
 
 

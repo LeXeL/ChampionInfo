@@ -1,8 +1,11 @@
 <template>
     <div>
-        <v-footer app fixed>
-            <span>&copy; 2017</span>
-        </v-footer>
+        <v-app>
+            <v-footer app fixed>
+                <span>&copy; 2017</span>
+            </v-footer>
+        </v-app>
+        
     </div>
 </template>
 
