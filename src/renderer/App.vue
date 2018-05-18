@@ -6,18 +6,22 @@
         <router-view></router-view>
       </transition>
     </div>
+    <footer-component></footer-component>
   </div>
 </template>
 
 <script>
 import navbar from './components/navbar.vue'
+import footerComponent from './components/footer.vue'
 export default {
   
   data() {
     return {};
   },
   components:{
-      'navbar':navbar
+      'navbar':navbar,
+      footerComponent
+      
   },
   methods: {}
 };

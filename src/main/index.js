@@ -2,6 +2,10 @@ const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
 
+
+var events = require('events');
+var testEmitter = new events.EventEmitter();
+
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -15,20 +19,10 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let win;
 
 function sendStatusToWindow(text) {
   log.info(text);
-  win.webContents.send('message', text);
-}
-function createDefaultWindow() {
-  win = new BrowserWindow();
-  win.webContents.openDevTools();
-  win.on('closed', () => {
-    win = null;
-  });
-  win.loadURL(`file://${__dirname}/static/version.html#v${app.getVersion()}`);
-  return win;
+  mainWindow.webContents.send('message', text);
 }
 autoUpdater.on('checking-for-update', () => {
   sendStatusToWindow('Checking for update...');
@@ -61,21 +55,6 @@ autoUpdater.on('update-downloaded', (info) => {
   }, 5000)
 })
 
-app.on('ready', function()  {
-  autoUpdater.checkForUpdates();
-});
-
-app.on('ready', function() {
-  // Create the Menu
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
-  
-  createDefaultWindow();
-});
-app.on('window-all-closed', () => {
-  app.quit();
-});
-
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
@@ -85,14 +64,21 @@ function createWindow () {
   /**
    * Initial window options
    */
+  setTimeout(()=>{
+    autoUpdater.checkForUpdates();
+  },60000);
+
   mainWindow = new BrowserWindow({
     height: 720,
+    frame: false,
     useContentSize: true,
     width: 480,
-    titleBarStyle: 'hidden'
+    
   })
   mainWindow.setMenuBarVisibility(false)
   mainWindow.loadURL(winURL)
+
+  mainWindow.testEmitter = testEmitter;
 
   mainWindow.on('closed', () => {
     mainWindow = null
