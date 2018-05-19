@@ -1,10 +1,10 @@
 <template>
     <div class="infocomponent">
-    <v-tabs fixed-tabs dark slider-color="grey">
-      <v-tab v-for="champion in championsinfo" :key="champion.name" v-cloak>
+    <v-tabs fixed-tabs dark slider-color="grey" :v-model="championsinfo[0].role">
+      <v-tab v-for="(champion,index) in championsinfo" :key="index" v-cloak ripple >
         {{champion.role | role}}
       </v-tab>
-      <v-tab-item v-for="champion in championsinfo" :key="champion.name">
+      <v-tab-item v-for="(champion,index) in championsinfo" :key="index">
         <br>
         <h3>Runes:</h3>
         <img v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
@@ -45,6 +45,9 @@ export default {
     computed:{
       localVersion(){
           return this.$store.state.localVersion
+      },
+      active(){
+        return this.championsinfo
       }
     },
     methods: {
@@ -85,7 +88,6 @@ export default {
         setItems(data){
           data.body.forEach(e => {
             if (e.hashes.finalitemshashfixed) {
-              console.log(e.hashes.finalitemshashfixed)
               this.items = [];
               let splitItems
               if (e.hashes.finalitemshashfixed.highestWinrate){
