@@ -1,27 +1,24 @@
 <template>
-    <div class="container-fluid">
-      <v-tabs> 
-        <div v-for="champion in championsinfo" :key="champion.name" v-cloak>
-          <v-tab>
-            {{champion.role | role}}
-          </v-tab> 
-          <v-tab-item>  
-            <br>
-            <h3>Runes:</h3>
-            <img v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
-            <div>
-              <h3>Items:</h3>
-              <div class="items">
-                <img v-for="(items,index) in champion.items" :key="items+index" v-bind:src="`http://ddragon.leagueoflegends.com/cdn/${localVersion}/img/item/${items}.png`">
-              </div>
-            </div>
-            <h3>Skills:</h3>
-            <span v-for="(skills,index) in champion.skills" :key="index">{{skills}}<span v-if="index+1 < champion.skills.length ">-></span></span>
-          </v-tab-item>
-        </div>
+    <div class="infocomponent">
+    <v-tabs fixed-tabs dark slider-color="grey">
+      <v-tab v-for="champion in championsinfo" :key="champion.name" v-cloak>
+        {{champion.role | role}}
+      </v-tab>
+      <v-tab-item v-for="champion in championsinfo" :key="champion.name">
         <br>
-        <button @click="$router.go(-1)" class="btn">Go Back</button>
-      </v-tabs>
+        <h3>Runes:</h3>
+        <img v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
+        <div>
+          <h3>Items:</h3>
+          <div class="items">
+            <img v-for="(items,index) in champion.items" :key="items+index" v-bind:src="`http://ddragon.leagueoflegends.com/cdn/${localVersion}/img/item/${items}.png`">
+          </div>
+        </div>
+        <h3>Skills:</h3>
+        <span v-for="(skills,index) in champion.skills" :key="index" class="headline">{{skills}}<span v-if="index+1 < champion.skills.length ">-></span></span>
+      </v-tab-item>
+    </v-tabs>
+    <v-btn @click="$router.go(-1)" class="btn">Go Back</v-btn>
     </div>
 </template>
 
@@ -88,8 +85,14 @@ export default {
         setItems(data){
           data.body.forEach(e => {
             if (e.hashes.finalitemshashfixed) {
+              console.log(e.hashes.finalitemshashfixed)
               this.items = [];
-              let splitItems = e.hashes.finalitemshashfixed.highestWinrate.hash.split("-");
+              let splitItems
+              if (e.hashes.finalitemshashfixed.highestWinrate){
+                splitItems = e.hashes.finalitemshashfixed.highestWinrate.hash.split("-");
+              }else{ 
+                splitItems = e.hashes.finalitemshashfixed.highestCount.hash.split("-");
+              } 
               splitItems.forEach(item => {
                 if(item !== "items"){
                   this.items.push(item);
@@ -142,5 +145,7 @@ export default {
 </script>
 
 <style scoped>
-
+.infocomponent{
+  margin-top: 50px;
+}
 </style>
