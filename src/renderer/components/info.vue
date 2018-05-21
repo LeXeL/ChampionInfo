@@ -1,6 +1,6 @@
 <template>
     <div class="infocomponent">
-    <v-tabs fixed-tabs dark slider-color="grey" :v-model="getChampionRole">
+    <v-tabs fixed-tabs dark slider-color="grey" :v-model="role">
       <v-tab v-for="(champion,index) in championsinfo" :key="index" v-cloak ripple >
         {{champion.role | role}}
       </v-tab>
@@ -26,6 +26,7 @@
 export default {
     data() {
         return {
+            role:'',
             key: this.$route.params.key,
             championsinfo: [],
             runes: [],
@@ -34,12 +35,15 @@ export default {
             mapIcon: {"8000":"Precision.png","8005":"PressTheAttack.png","8008":"FlowofBattleTemp.png","8009":"LastResortIcon.png","8010":"Conqueror.png","8014":"CoupDeGrace.png","8017":"CutDown.png","8021":"FleetFootwork.png","8100":"Domination.png","8105":"RelentlessHunter.png","8112":"Electrocute.png","8120":"GhostPoro.png","8124":"Predator.png","8126":"CheapShot.png","8128":"DarkHarvest.png","8134":"IngeniousHunter.png","8135":"RavenousHunter.png","8136":"ZombieWard.png","8138":"EyeballCollection.png","8139":"GreenTerror_TasteOfBlood.png","8143":"SuddenImpact.png","8200":"Sorcery.png","8210":"Transcendence.png","8214":"SummonAery.png","8224":"Pokeshield.png","8226":"ManaflowBand.png","8229":"ArcaneComet.png","8230":"PhaseRush.png","8232":"Waterwalking.png","8233":"AbsoluteFocus.png","8234":"CelerityTemp.png","8236":"GatheringStorm.png","8237":"Scorch.png","8242":"Unflinching.png","8243":"TheUltimateHat.png","8299":"LastStand.png","8300":"Inspiration.png","8304":"MagicalFootwear.png","8306":"HextechFlashtraption.png","8313":"PerfectTiming.png","8316":"MinionDematerializer.png","8321":"FuturesMarket.png","8326":"UnsealedSpellbook.png","8345":"BiscuitDelivery.png","8347":"CosmicInsight.png","8351":"GlacialAugment.png","8352":"TimeWarpTonic.png","8359":"Kleptomancy.png","8400":"Resolve.png","8410":"ApproachVelocity.png","8429":"Conditioning.png","8437":"GraspOfTheUndying.png","8439":"VeteranAftershock.png","8444":"SecondWind.png","8446":"Demolish.png","8451":"Overgrowth.png","8453":"Revitalize.png","8463":"FontOfLife.png","8465":"Guardian.png","8472":"Chrysalis.png","8473":"BonePlating.png","9101":"Overheal.png","9103":"Legend_Infamy.png","9104":"Legend_Heroism.png","9105":"Legend_Tenacity.png","9111":"DangerousGame.png"}
         };
     },
-    created() { 
+    async created() { 
         if(!localStorage.getItem("mapIcon")){
-            this.getRunesInfo();
+            await this.getRunesInfo();
+            this.role = this.championsinfo[0].role;
+            
         }else{
             this.mapIcon = JSON.parse(localStorage.getItem("mapIcon"));
-            this.getrunes();
+            await this.getrunes();
+            this.role = this.championsinfo[0].role;
         }
     },
     computed:{
@@ -48,10 +52,6 @@ export default {
       }
     },
     methods: {
-        async getChampionRole(){
-          await this.championsinfo.length > 1
-          return this.championsinfo[0].role
-        },
         getPic(index) {
             return require("../assets/Runes/" + index);
         },
@@ -59,7 +59,12 @@ export default {
           data.body.forEach(e => {
             if (e.hashes.skillorderhash) {
               this.skills = [];
-              let splitSkills = e.hashes.skillorderhash.highestWinrate.hash.split("-");
+              let splitSkills
+              if (e.hashes.skillorderhash.highestWinrate){
+                splitSkills = e.hashes.skillorderhash.highestWinrate.hash.split("-");
+              }else{ 
+                splitSkills = e.hashes.skillorderhash.highestCount.hash.split("-");
+              } 
               splitSkills.forEach(skill => {
                 if(skill !== "skill"){
                   this.skills.push(skill);
@@ -78,7 +83,12 @@ export default {
           data.body.forEach(e => {
             if (e.hashes.runehash) {
               this.runes = [];
-              let splitRunes = e.hashes.runehash.highestWinrate.hash.split("-");
+              let splitRunes
+              if (e.hashes.runehash.highestWinrate){
+                splitRunes = e.hashes.runehash.highestWinrate.hash.split("-");
+              }else{ 
+                splitRunes = e.hashes.runehash.highestCount.hash.split("-");
+              } 
               splitRunes.forEach(rune => {
                 this.runes.push(this.mapIcon[rune]);
               });
