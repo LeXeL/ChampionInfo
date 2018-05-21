@@ -28,7 +28,7 @@ import electron from 'electron'
         },
         methods:{
             closeWindows(){
-                electron.remote.getCurrentWindow().close();
+                electron.remote.getCurrentWindow().close()
             }
         }
         

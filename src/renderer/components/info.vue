@@ -1,6 +1,6 @@
 <template>
     <div class="infocomponent">
-    <v-tabs fixed-tabs dark slider-color="grey" :v-model="championsinfo[0].role">
+    <v-tabs fixed-tabs dark slider-color="grey" :v-model="getChampionRole">
       <v-tab v-for="(champion,index) in championsinfo" :key="index" v-cloak ripple >
         {{champion.role | role}}
       </v-tab>
@@ -45,12 +45,13 @@ export default {
     computed:{
       localVersion(){
           return this.$store.state.localVersion
-      },
-      active(){
-        return this.championsinfo
       }
     },
     methods: {
+        async getChampionRole(){
+          await this.championsinfo.length > 1
+          return this.championsinfo[0].role
+        },
         getPic(index) {
             return require("../assets/Runes/" + index);
         },

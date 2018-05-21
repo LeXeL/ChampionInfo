@@ -4,7 +4,7 @@ const {autoUpdater} = require("electron-updater");
 
 
 var events = require('events');
-var testEmitter = new events.EventEmitter();
+var statusEmitter = new events.EventEmitter();
 
 /**
  * Set `__static` path to static files in production
@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 function sendStatusToWindow(text) {
   log.info(text);
-  mainWindow.webContents.send('message', text);
+  mainWindow.webContents.send('status', {msg:text});
 }
 
 
@@ -35,37 +35,8 @@ function createWindow () {
   /**
    * Initial window options
    */
-  autoUpdater.checkForUpdates();
-  autoUpdater.on('checking-for-update', () => {
-    sendStatusToWindow('Checking for update...');
-  })
-  autoUpdater.on('update-available', (info) => {
-    sendStatusToWindow('Update available.');
-  })
-  autoUpdater.on('update-not-available', (info) => {
-    sendStatusToWindow('Update not available.');
-  })
-  autoUpdater.on('error', (err) => {
-    sendStatusToWindow('Error in auto-updater.');
-  })
-  autoUpdater.on('download-progress', (progressObj) => {
-    let log_message = "Download speed: " + progressObj.bytesPerSecond;
-    log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
-    log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-    sendStatusToWindow(log_message);
-  })
-  autoUpdater.on('update-downloaded', (info) => {
-    sendStatusToWindow('Update downloaded; will install in 5 seconds');
-  });
-  
-  autoUpdater.on('update-downloaded', (info) => {
-    // Wait 5 seconds, then quit and install
-    // In your application, you don't need to wait 5 seconds.
-    // You could call autoUpdater.quitAndInstall(); immediately
-    setTimeout(function() {
-      autoUpdater.quitAndInstall();  
-    }, 5000)
-  })
+  statusEmitter.emit('status')
+
   mainWindow = new BrowserWindow({
     height: 720,
     frame: false,
@@ -76,7 +47,7 @@ function createWindow () {
   mainWindow.setMenuBarVisibility(false)
   mainWindow.loadURL(winURL)
 
-  mainWindow.testEmitter = testEmitter;
+  mainWindow.statusEmitter = statusEmitter;
 
   mainWindow.on('closed', () => {
     mainWindow = null
@@ -91,6 +62,41 @@ app.on('window-all-closed', () => {
   }
 })
 
+// autoUpdater.checkForUpdates();
+autoUpdater.on('checking-for-update', () => {
+  // statusEmitter.on(status,'Checking for update...')
+  statusEmitter.emit('status')
+  sendStatusToWindow('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  // statusEmitter.on('status','Update available.')
+  statusEmitter.emit('status')
+  sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  sendStatusToWindow('Error in auto-updater.');
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  sendStatusToWindow(log_message);
+})
+autoUpdater.on('update-downloaded', (info) => {
+  sendStatusToWindow('Update downloaded; will install in 5 seconds');
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+  // Wait 5 seconds, then quit and install
+  // In your application, you don't need to wait 5 seconds.
+  // You could call autoUpdater.quitAndInstall(); immediately
+  setTimeout(function() {
+    autoUpdater.quitAndInstall();  
+  }, 5000)
+})
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
@@ -112,7 +118,7 @@ autoUpdater.on('update-downloaded', () => {
   autoUpdater.quitAndInstall()
 })
 
+*/
 app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
+  autoUpdater.checkForUpdates()
 })
- */

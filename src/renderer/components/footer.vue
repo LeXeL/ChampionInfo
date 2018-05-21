@@ -18,15 +18,16 @@ import electron from 'electron'
                 
             }
         },
+        mounted(){
+        },
         computed:{
-            status : function(){
-                electron.ipcRenderer.on('message', text =>{
-                    if (text) return text;
-                    else return "Scanning..."
-
+            status(){
+                electron.ipcRenderer.on('status', (event, data) => {
+                    console.log(data)
+                    return data
                 })
+                }
             }
-        }
     }
 </script>
 
