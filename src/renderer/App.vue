@@ -1,13 +1,13 @@
 
 <template>
 <v-app dark>
-  <navbar-component @click="print"></navbar-component>
+  <navbar-component></navbar-component>
   <main>
-    <transition name="fade">
-      <v-content>
+    <v-container fluid class="pa-0" >
+      <v-layout column>
         <router-view></router-view>
-      </v-content>
-    </transition>
+      </v-layout>
+    </v-container>
   </main>
  <footer-component></footer-component>
 </v-app>
@@ -22,11 +22,6 @@ export default {
   data() {
     return {};
   },
-  methods:{
-    print(){
-      console.log("ENTRO")
-    }
-  },
   components:{
       navbarComponent,
       footerComponent
@@ -36,9 +31,18 @@ export default {
 </script>
 
 <style>
-body{
-   background-image: linear-gradient(to top, #c4c5c7 0%, #dcdddf 52%, #ebebeb 100%);
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
-
+::-webkit-scrollbar {
+  width: 4px; /* remove scrollbar space */
+  background: transparent; /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: rgb(33,33,33);
+}
 
 </style>
