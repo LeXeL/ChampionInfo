@@ -1,7 +1,7 @@
 
 <template>
 <v-app dark>
-  <navbar-component></navbar-component>
+  <navbar-component @click="print"></navbar-component>
   <main>
     <transition name="fade">
       <v-content>
@@ -21,6 +21,11 @@ import footerComponent from './components/footer.vue'
 export default {
   data() {
     return {};
+  },
+  methods:{
+    print(){
+      console.log("ENTRO")
+    }
   },
   components:{
       navbarComponent,

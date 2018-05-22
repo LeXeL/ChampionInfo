@@ -1,6 +1,6 @@
 <template>
-    <div class="infocomponent">
-    <v-tabs fixed-tabs dark slider-color="grey" :v-model="role">
+    <div class="infocomponent" v-if="ready">
+    <v-tabs fixed-tabs dark slider-color="grey" :v-model="role" >
       <v-tab v-for="(champion,index) in championsinfo" :key="index" v-cloak ripple >
         {{champion.role | role}}
       </v-tab>
@@ -26,6 +26,7 @@
 export default {
     data() {
         return {
+            ready: false,
             role:'',
             key: this.$route.params.key,
             championsinfo: [],
@@ -37,14 +38,14 @@ export default {
     },
     async created() { 
         if(!localStorage.getItem("mapIcon")){
-            await this.getRunesInfo();
-            this.role = this.championsinfo[0].role;
-            
+            await this.getRunesInfo();            
         }else{
             this.mapIcon = JSON.parse(localStorage.getItem("mapIcon"));
             await this.getrunes();
-            this.role = this.championsinfo[0].role;
         }
+        this.role = this.championsinfo[0].role
+        this.ready = true;
+  
     },
     computed:{
       localVersion(){
