@@ -2,10 +2,6 @@ const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
 
-
-var events = require('events');
-var statusEmitter = new events.EventEmitter();
-
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
@@ -22,7 +18,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 function sendStatusToWindow(text) {
   log.info(text);
-  mainWindow.webContents.send('status', {msg:text});
+  mainWindow.webContents.send('status',text);
 }
 
 
@@ -35,7 +31,6 @@ function createWindow () {
   /**
    * Initial window options
    */
-  statusEmitter.emit('status')
 
   mainWindow = new BrowserWindow({
     height: 720,
@@ -46,8 +41,6 @@ function createWindow () {
   })
   mainWindow.setMenuBarVisibility(false)
   mainWindow.loadURL(winURL)
-
-  mainWindow.statusEmitter = statusEmitter;
 
   mainWindow.on('closed', () => {
     mainWindow = null
@@ -64,13 +57,9 @@ app.on('window-all-closed', () => {
 
 // autoUpdater.checkForUpdates();
 autoUpdater.on('checking-for-update', () => {
-  // statusEmitter.on(status,'Checking for update...')
-  statusEmitter.emit('status')
   sendStatusToWindow('Checking for update...');
 })
 autoUpdater.on('update-available', (info) => {
-  // statusEmitter.on('status','Update available.')
-  statusEmitter.emit('status')
   sendStatusToWindow('Update available.');
 })
 autoUpdater.on('update-not-available', (info) => {

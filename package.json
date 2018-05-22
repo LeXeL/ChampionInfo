@@ -1,6 +1,6 @@
 {
   "name": "championinfo",
-  "version": "0.0.3-alpha",
+  "version": "0.0.5-alpha",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
     "build:publish": "node_modules/.bin/build --win -p always",
@@ -19,6 +19,7 @@
     "bootstrap-vue": "^2.0.0-rc.9",
     "electron-log": "^1.3.0",
     "electron-updater": "^2.18.2",
+    "jquery": "^3.3.1",
     "vue": "^2.3.3",
     "vue-electron": "^1.0.6",
     "vue-lodash": "^2.0.0",
