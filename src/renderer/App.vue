@@ -5,7 +5,9 @@
   <main>
     <v-container fluid class="pa-0" >
       <v-layout column>
-        <router-view></router-view>
+        <v-slide-y-transition mode="out-in">
+          <router-view></router-view>
+        </v-slide-y-transition>
       </v-layout>
     </v-container>
   </main>

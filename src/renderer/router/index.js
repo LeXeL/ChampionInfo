@@ -23,6 +23,10 @@ export default new Router({
       component:info
     },
     {
+      path: '/info/:key/:role',
+      component:info
+    },
+    {
         path:'/topwinrate',
         component:topwinrate
     }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div class="buttons">
             <button @click="role = 'TOP'">TOP</button>
             <button @click="role = 'JUNGLE'">JUNGLE</button>
             <button @click="role = 'MIDDLE'">MID</button>
@@ -107,6 +107,9 @@
 </script>
 
 <style scoped>
+.buttons{
+    margin-top: 50px;
+}
 img{
     height: 35px;
     width: 35px;
