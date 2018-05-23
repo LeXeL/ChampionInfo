@@ -2,10 +2,10 @@
     <div>
         <v-footer :fixed="true">
             <v-btn>
-                <v-icon class="grey--text text--darken-3">settings</v-icon>
+                <v-icon class="icon grey--text text--darken-3">reorder</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <span>{{status}}</span>
+                <span>{{status}}</span>
         </v-footer>      
     </div>
 </template>
@@ -15,22 +15,19 @@ import electron from 'electron'
     export default {
         data(){
             return{
-                
+                status : 'Checking for updates...'
             }
         },
         mounted(){
-        },
-        computed:{
-            status(){
-                electron.ipcRenderer.on('status', (event, data) => {
-                    console.log(data)
-                    return data
-                })
-                }
-            }
+            electron.ipcRenderer.on('status', (event, data) => {
+                this.status = data;
+            })
+        }
     }
 </script>
 
 <style scoped>
-
+.icon{
+    margin-bottom: 10px;
+}
 </style>

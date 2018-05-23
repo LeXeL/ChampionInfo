@@ -67,7 +67,7 @@
   },
   "author": "Diego Rodriguez <diego.r2892@gmail.com>",
   "description": "A ChampionGG GUI",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "build": {
     "productName": "championinfo",

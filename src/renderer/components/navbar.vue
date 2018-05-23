@@ -3,9 +3,9 @@
         <v-toolbar style="-webkit-app-region: drag;" dark fixed dense>
             <v-toolbar-title> <a to="/">ChampionInfo</a></v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn icon @click="closeWindow()">
+            <!-- <v-btn icon @click="closeWindow()">
                 <v-icon>close</v-icon>
-            </v-btn>
+            </v-btn> -->
         </v-toolbar>
     </div>
 </template>

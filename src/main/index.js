@@ -1,11 +1,7 @@
 const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
-
-/**
- * Set `__static` path to static files in production
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
- */
+const EventEmitter = require('events')
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -15,33 +11,25 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
+let mainWindow;
 
 function sendStatusToWindow(text) {
   log.info(text);
-  mainWindow.webContents.send('status',text);
+  mainWindow.webContents.send('status',text)
 }
 
-
-let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
 
 function createWindow () {
-  /**
-   * Initial window options
-   */
-
   mainWindow = new BrowserWindow({
     height: 720,
-    frame: false,
     useContentSize: true,
     width: 480,
-    
-  })
+  });
   mainWindow.setMenuBarVisibility(false)
   mainWindow.loadURL(winURL)
-
   mainWindow.on('closed', () => {
     mainWindow = null
   })
@@ -57,7 +45,7 @@ app.on('window-all-closed', () => {
 
 // autoUpdater.checkForUpdates();
 autoUpdater.on('checking-for-update', () => {
-  sendStatusToWindow('Checking for update...');
+  sendStatusToWindow('Checking for update...'); 
 })
 autoUpdater.on('update-available', (info) => {
   sendStatusToWindow('Update available.');
@@ -86,28 +74,15 @@ autoUpdater.on('update-downloaded', (info) => {
     autoUpdater.quitAndInstall();  
   }, 5000)
 })
+
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
 })
 
-/**
- * Auto Updater
- *
- * Uncomment the following code below and install `electron-updater` to
- * support auto updating. Code Signing with a valid certificate is required.
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
- */
-
-/*
-import { autoUpdater } from 'electron-updater'
-
-autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
-})
-
-*/
 app.on('ready', () => {
-  autoUpdater.checkForUpdates()
+  setTimeout(()=>{
+    autoUpdater.checkForUpdates()
+  },2000)
 })
