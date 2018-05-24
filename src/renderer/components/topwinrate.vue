@@ -21,7 +21,7 @@
                     {{data.item.role | role}}
                 </template>
                 <template slot="championId" slot-scope="data">
-                    <router-link v-bind:to="'/info/'+ data.item.championId">
+                    <router-link v-bind:to="'/info/'+ data.item.championId+'/'+data.item.role">
                         <img :src="'http://ddragon.leagueoflegends.com/cdn/'+ localVersion +'/img/champion/'+ getChampionImageById(data.item.championId)" alt="">
                         <span> {{getChampionNameById(data.item.championId)}} </span>
                     </router-link>
