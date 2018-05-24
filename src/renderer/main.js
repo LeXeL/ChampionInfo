@@ -14,7 +14,7 @@ import store from './store'
 import 'vuetify/dist/vuetify.min.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'vue2-animate/dist/vue2-animate.min.css'
+import 'material-design-icons/iconfont/material-icons.css'
 
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
