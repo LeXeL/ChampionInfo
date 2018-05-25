@@ -1,18 +1,18 @@
 <template>
-    <div class="container">
-        <div class="row show-Champions">
-            <input type="text" placeholder="Champion Name" class="form-control searchbar" v-model="name">
+    <v-container >
+        <div class="show-Champions">
+            <v-text-field  prepend-icon="search" flat type="text" placeholder="Champion Name" class="form-control searchbar" v-model="name"><v-icon>search</v-icon></v-text-field>
             <div v-for="champion in ChampionName" class="col-2 champions center-block" :key="champion.id">
                 <!-- <transition name="fade" mode="out-in"> -->
                     <router-link v-bind:to="'/info/'+champion.key">
                         <img class="img-champions align-self-center mr-3" v-bind:src="'http://ddragon.leagueoflegends.com/cdn/'+ localVersion +'/img/champion/'+ champion.image.full ">              
                     </router-link>
                     <br>
-                    <p class="champion-name"> {{champion.name}} </p>
+                    <p class="champion-name "> {{champion.name}} </p>
                 <!-- </transition> -->
             </div>
         </div>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -72,6 +72,7 @@ export default {
 </script>
 <style scoped>
 .show-Champions {
+    margin-top: -50px;
     max-width: 450px;
     padding: 20px;
     margin: 20px 0;
@@ -92,8 +93,10 @@ export default {
 }
 .champion-name{
     text-align: center;
+    font-weight: bold;
+
 }
 .searchbar{
-    margin: 10px;
+    width: 90%;
 }
 </style>

@@ -1,21 +1,21 @@
 <template>
     <div>
-        <b-navbar toggleable="md" type="dark" variant="dark" fixed="top">
-            <b-navbar-brand to="/">ChampionInfo</b-navbar-brand>
-            <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-            <b-collapse is-nav id="nav_collapse">
-                <b-navbar-nav>
-                    <b-nav-item>Current LoL Version: {{localVersion}}</b-nav-item>
-                    <b-nav-item to="/topwinrate"> Top winrate</b-nav-item>
-                    <b-button @click="Refresh" to="/"> Refresh</b-button>
-                    <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
-                </b-navbar-nav>
-            </b-collapse>
-        </b-navbar>
+        <v-toolbar style="-webkit-app-region: drag;" dark fixed dense>
+            <v-toolbar-title> 
+                    ChampionInfo
+            </v-toolbar-title>
+            <v-spacer></v-spacer>
+            <!-- <v-btn icon @click="closeWindow()">
+                <v-icon>close</v-icon>
+            </v-btn> -->
+        </v-toolbar>
     </div>
 </template>
+       
+
 
 <script>
+import electron from 'electron'
     export default {
         methods:{
             Refresh(){
@@ -27,11 +27,18 @@
             localVersion(){
                 return this.$store.state.localVersion
             }
+        },
+        methods:{
+            closeWindows(){
+                electron.remote.getCurrentWindow().close()
+            }
         }
         
     }
 </script>
 
 <style scoped>
-
+.navbar{
+    -webkit-app-region: drag;
+}
 </style>

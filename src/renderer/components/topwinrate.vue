@@ -1,33 +1,31 @@
 <template>
     <div>
-        <div>
-            <button @click="role = 'TOP'">TOP</button>
-            <button @click="role = 'JUNGLE'">JUNGLE</button>
-            <button @click="role = 'MIDDLE'">MID</button>
-            <button @click="role = 'DUO_CARRY'">ADC</button>
-            <button @click="role = 'DUO_SUPPORT'">SUPPORT</button>
-            <span> Filter by: <span v-if="role">{{role | role}}</span><span v-else>ALL</span></span>
-            
-        </div>
-        <transition name="fadeUp">
-            <b-table :fields="fields" :items="championWinRatedata | championRole(role)">
-                <template slot="index" slot-scope="data">
-                    {{data.index + 1}}
-                </template>
-                <template slot="winRate" slot-scope="data">
-                    {{data.item.winRate | percentage}}
-                </template>
-                <template slot="role" slot-scope="data">
-                    {{data.item.role | role}}
-                </template>
-                <template slot="championId" slot-scope="data">
-                    <router-link v-bind:to="'/info/'+ data.item.championId">
+        <v-container text-xs-center class="buttons">
+            <v-layout>
+                <v-flex>
+                    <v-btn :ripple="false" @click.native="role = 'TOP'">TOP</v-btn>
+                    <v-btn :ripple="false" @click.native="role = 'JUNGLE'">JUNGLE</v-btn>
+                    <v-btn :ripple="false" @click.native="role = 'MIDDLE'">MID</v-btn>
+                    <v-btn :ripple="false" @click.native="role = 'DUO_CARRY'">ADC</v-btn>
+                    <v-btn :ripple="false" @click.native="role = 'DUO_SUPPORT'">SUPPORT</v-btn>
+                    <v-btn :ripple="false" @click.native="role = ''">ALL</v-btn>
+                    <span> Filter by: <span v-if="role">{{role | role}}</span><span v-else>ALL</span></span>
+                </v-flex>
+            </v-layout>
+        </v-container>
+        <v-data-table :pagination.sync="pagination"  :total-items="100" :headers="headers" :items="championWinRatedata | championRole(role)" hide-actions>
+            <template slot="items" slot-scope="data">
+                <td class="subheading">{{data.index + 1}}</td>
+                <td class="subheading">
+                    <router-link v-bind:to="'/info/'+ data.item.championId+'/'+data.item.role">
                         <img :src="'http://ddragon.leagueoflegends.com/cdn/'+ localVersion +'/img/champion/'+ getChampionImageById(data.item.championId)" alt="">
                         <span> {{getChampionNameById(data.item.championId)}} </span>
                     </router-link>
-                </template>
-            </b-table>
-        </transition>
+                </td>
+                <td class="subheading">{{data.item.winRate | percentage}}</td>
+                <td>{{data.item.role | role}}</td>
+            </template>
+        </v-data-table>
     </div>
 </template>
 
@@ -36,7 +34,17 @@
         data(){
             return{
                 role: '',
-                fields: [ 'index',{key:"championId", label: "Champion"}, {key:"winRate", label: "Win Rate",sortable: true}, {key:"role", label: "Role",sortable: true} ],
+                pagination:{
+                    sortBy:'winRate',
+                    descending:true
+                },
+                headers: [
+                    {text:'Index',value:"index"},
+                    {text:"Champion", value: "championId"},
+                    {text:"Win Rate", value: "winRate"},
+                    {text:"Role", value: "role"}
+                ],
+                //   {key:"", label: "",sortable: true}, {key:"", label: "",sortable: true} ],
                 Champions: JSON.parse(localStorage.getItem("Champions")),
                 championWinRatedata :[]
             }
@@ -107,15 +115,28 @@
 </script>
 
 <style scoped>
+.buttons{
+    margin-top: 50px;
+}
 img{
+    margin-left: -20px;
+    margin-right: 10px;
     height: 35px;
     width: 35px;
 }
-.filter-bar{
-    margin-top: 40px;
-    margin-bottom: 40px;
-    width: 100%;
-    height: 20px;
-    
+a{
+    text-decoration: none;
 }
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: white;
+}
+a:hover {
+    color: white;
+}
+
 </style>

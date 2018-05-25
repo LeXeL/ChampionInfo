@@ -1,33 +1,50 @@
+
 <template>
-  <div>
-    <navbar></navbar>
-    <div class="container">
-      <transition name="fade">
-        <router-view></router-view>
-      </transition>
-    </div>
-  </div>
+<v-app dark>
+  <navbar-component></navbar-component>
+  <main>
+    <v-container fluid class="pa-0" >
+      <v-layout column>
+        <v-slide-y-transition mode="out-in">
+          <router-view></router-view>
+        </v-slide-y-transition>
+      </v-layout>
+    </v-container>
+  </main>
+ <footer-component></footer-component>
+</v-app>
 </template>
 
+
 <script>
-import navbar from './components/navbar.vue'
+import navbarComponent from './components/navbar.vue'
+import footerComponent from './components/footer.vue'
+
 export default {
-  
   data() {
     return {};
   },
   components:{
-      'navbar':navbar
+      navbarComponent,
+      footerComponent
   },
   methods: {}
 };
 </script>
 
 <style>
-body{
-   background-image: linear-gradient(to top, #c4c5c7 0%, #dcdddf 52%, #ebebeb 100%);
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
-.container{
-    margin-top: 50px;
+::-webkit-scrollbar {
+  width: 4px; /* remove scrollbar space */
+  background: transparent; /* optional: just make scrollbar invisible */
 }
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: rgb(33,33,33);
+}
+
 </style>
