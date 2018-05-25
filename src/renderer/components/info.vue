@@ -1,5 +1,5 @@
 <template>
-    <div class="infocomponent" v-if="ready">
+    <div>
     <v-tabs fixed-tabs dark slider-color="grey" v-model="role" >
       <v-tab v-for="(champion,index) in championsinfo" :key="index" v-cloak ripple >
         {{champion.role | role}}
