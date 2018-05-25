@@ -1,7 +1,7 @@
 <template>
     <v-container >
-        <div class="row show-Champions">
-            <input type="text" placeholder="Champion Name" class="form-control searchbar" v-model="name">
+        <div class="show-Champions">
+            <v-text-field  prepend-icon="search" flat type="text" placeholder="Champion Name" class="form-control searchbar" v-model="name"><v-icon>search</v-icon></v-text-field>
             <div v-for="champion in ChampionName" class="col-2 champions center-block" :key="champion.id">
                 <!-- <transition name="fade" mode="out-in"> -->
                     <router-link v-bind:to="'/info/'+champion.key">
@@ -72,6 +72,7 @@ export default {
 </script>
 <style scoped>
 .show-Champions {
+    margin-top: -50px;
     max-width: 450px;
     padding: 20px;
     margin: 20px 0;
@@ -96,6 +97,6 @@ export default {
 
 }
 .searchbar{
-    margin: 10px;
+    width: 90%;
 }
 </style>

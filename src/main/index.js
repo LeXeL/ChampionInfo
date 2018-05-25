@@ -54,7 +54,7 @@ autoUpdater.on('update-not-available', (info) => {
   sendStatusToWindow('Update not available.');
 })
 autoUpdater.on('error', (err) => {
-  sendStatusToWindow(err);
+  sendStatusToWindow('Error in update');
 })
 autoUpdater.on('download-progress', (progressObj) => {
   let log_message = "Download speed: " + progressObj.bytesPerSecond;

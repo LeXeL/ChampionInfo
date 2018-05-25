@@ -13,7 +13,7 @@
         absolute
         >
         <v-list class="pt-0" dense>
-        <v-divider></v-divider>
+        <br>
         <v-list-tile v-for="item in items" :key="item.title" @click="$router.push(item.to)">
             <v-list-tile-action>
             <v-icon class="icon-drawer">{{ item.icon }}</v-icon>
@@ -36,7 +36,7 @@ import electron from 'electron'
                 status : 'Checking for updates...',
                 items: [
                     { title: 'Home', icon: 'dashboard', to:'/' },
-                    { title: 'Top Winrate', icon: 'question_answer' ,to:'/topwinrate' }
+                    { title: 'Top Winrate', icon: 'list' ,to:'/topwinrate' }
                 ],
             }
         },
