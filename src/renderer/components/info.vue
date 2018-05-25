@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="infocomponent">
     <v-tabs fixed-tabs dark slider-color="grey" v-model="role" >
       <v-tab v-for="(champion,index) in championsinfo" :key="index" v-cloak ripple >
         {{champion.role | role}}
@@ -7,7 +7,7 @@
       <v-tab-item v-for="(champion,index) in championsinfo" :key="index">
         <br>
         <h3>Runes:</h3>
-        <img v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
+        <img  class="images-runes " v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
         <div>
           <h3>Items:</h3>
           <div class="items">
@@ -171,6 +171,9 @@ export default {
 
 <style scoped>
 .infocomponent{
-  margin-top: 50px;
+  margin: 50px 20px;
+}
+.images-runes{
+  size:40px;
 }
 </style>

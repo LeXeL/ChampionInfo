@@ -15,11 +15,12 @@
         </v-container>
         <v-data-table :pagination.sync="pagination"  :total-items="100" :headers="headers" :items="championWinRatedata | championRole(role)" hide-actions>
             <template slot="items" slot-scope="data">
-                <td class="subheading">{{data.index + 1}}</td>
                 <td class="subheading">
                     <router-link v-bind:to="'/info/'+ data.item.championId+'/'+data.item.role">
+                    <v-avatar>
                         <img :src="'http://ddragon.leagueoflegends.com/cdn/'+ localVersion +'/img/champion/'+ getChampionImageById(data.item.championId)" alt="">
-                        <span> {{getChampionNameById(data.item.championId)}} </span>
+                    </v-avatar>
+                        <span class="champion-name"> {{getChampionNameById(data.item.championId)}} </span>
                     </router-link>
                 </td>
                 <td class="subheading">{{data.item.winRate | percentage}}</td>
@@ -39,7 +40,6 @@
                     descending:true
                 },
                 headers: [
-                    {text:'Index',value:"index"},
                     {text:"Champion", value: "championId"},
                     {text:"Win Rate", value: "winRate"},
                     {text:"Role", value: "role"}

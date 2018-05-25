@@ -16,7 +16,7 @@
         <br>
         <v-list-tile v-for="item in items" :key="item.title" @click="$router.push(item.to)">
             <v-list-tile-action>
-            <v-icon class="icon-drawer">{{ item.icon }}</v-icon>
+            <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -55,12 +55,4 @@ import electron from 'electron'
 </script>
 
 <style scoped>
-.icon{
-    margin-bottom: 10px;
-    
-}
-.icon-drawer{
-    margin-top: 10px;
-    margin-left: 15px;
-}
 </style>
