@@ -8,7 +8,7 @@
                         <img class="img-champions align-self-center mr-3" v-bind:src="'http://ddragon.leagueoflegends.com/cdn/'+ localVersion +'/img/champion/'+ champion.image.full ">              
                     </router-link>
                     <br>
-                    <p class="champion-name "> {{champion.name}} </p>
+                    <p class="champion-name"> {{champion.name}} </p>
                 <!-- </transition> -->
             </div>
         </div>
@@ -72,9 +72,6 @@ export default {
 </script>
 <style scoped>
 .show-Champions {
-    margin-top: -50px;
-    max-width: 450px;
-    padding: 20px;
     margin: 20px 0;
     box-sizing: border-box;
     text-align: center;
@@ -92,7 +89,7 @@ export default {
     margin: 0 5px;
 }
 .champion-name{
-    text-align: center;
+    margin-left: -20px;
     font-weight: bold;
 
 }
