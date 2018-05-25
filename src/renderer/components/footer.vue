@@ -8,6 +8,7 @@
                 <span style="margin-right:10px;">{{status}}</span>
         </v-footer> 
         <v-navigation-drawer
+        style="position:fixed; top:0; left:0; overflow-y:scroll;"
         v-model="drawer"
         temporary
         absolute
@@ -55,4 +56,5 @@ import electron from 'electron'
 </script>
 
 <style scoped>
+
 </style>
