@@ -19,10 +19,10 @@
 export default {
     data() {
         return {
-        champions: [],
-        localVersion: "",
-        name: "",
-        lolcurrentVersion:''
+            champions: [],
+            localVersion: "",
+            name: "",
+            lolcurrentVersion:''
         };
     },
     async created() {
