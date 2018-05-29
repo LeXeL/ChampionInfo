@@ -6,8 +6,9 @@
       </v-tab>
       <v-tab-item v-for="(champion,index) in championsinfo" :key="index">
         <br>
+        <h3>Champion: {{champion.name}}</h3>
         <h3>Runes:</h3>
-        <img  class="images-runes " v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
+        <img  class="imagesrunes " v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
         <div>
           <h3>Items:</h3>
           <div class="items">
@@ -45,7 +46,6 @@ export default {
               if(this.championsinfo[key].role == this.$route.params.role){
                 this.role = key.toString();
               }
-              
             }
           }
         }else{
@@ -168,7 +168,8 @@ export default {
 .infocomponent{
   margin: 50px 20px;
 }
-.images-runes{
-  size:40px;
+.imagesrunes{
+  width:80px;
+  height: 80px;
 }
 </style>

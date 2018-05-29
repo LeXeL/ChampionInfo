@@ -51,7 +51,7 @@ autoUpdater.on('update-available', (info) => {
   sendStatusToWindow('Update available.');
 })
 autoUpdater.on('update-not-available', (info) => {
-  sendStatusToWindow('Update not available.');
+  sendStatusToWindow('You got the last Version :)');
 })
 autoUpdater.on('error', (err) => {
   sendStatusToWindow('Error in update');
