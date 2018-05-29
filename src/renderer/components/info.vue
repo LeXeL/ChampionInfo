@@ -6,7 +6,7 @@
       </v-tab>
       <v-tab-item v-for="(champion,index) in championsinfo" :key="index">
         <br>
-        <h3>Champion: {{champion.name}}</h3>
+        <h1>Champion: {{championName}}</h1>
         <h3>Runes:</h3>
         <img  class="imagesrunes " v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
         <div>
@@ -55,8 +55,24 @@ export default {
   
     },
     computed:{
-      localVersion(){
-          return this.$store.state.localVersion
+        localVersion(){
+          if (this.$store.state.localVersion == ''){
+            this.$store.dispatch('getLoLCurrentVersion')
+            return this.$store.state.lolVersion
+          }else{
+            return this.$store.state.localVersion
+          }
+      },
+      championName(){
+        let champion = this.$store.state.champions;
+        for (const key in champion) {
+          if (champion.hasOwnProperty(key)) {
+            if(champion[key].key == this.key){
+              return champion[key].id
+            }
+            
+          }
+        }
       }
     },
     methods: {

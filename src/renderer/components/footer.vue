@@ -13,7 +13,6 @@
         temporary
         absolute
         app class="pa-0"
-        style="position:fixed; top:0; left:0; overflow-y:scroll;"
         >
         <v-layout column fill-height>
             <v-list>
@@ -31,7 +30,7 @@
             <v-list>
                 <v-list-tile>
                     <v-list-tile-content>
-                        <h4>LocalVersion: {{localVersion}}</h4>
+                        <h4>LoL Current Version: {{localVersion}}</h4>
                         <h3>Made by: <a class='board-item-a' :href="'https://github.com/LeXeL'" target='_blank'>LeXeL</a></h3> 
                     </v-list-tile-content>
                 </v-list-tile>
@@ -73,11 +72,6 @@ import electron from 'electron'
                 electron.shell.openExternal(e.target.href)
                 })
             })
-        },
-        methods:{
-            openExternal(){
-                child_process.execSync('start http://example.com')
-            }
         }
     }
 </script>
