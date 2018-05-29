@@ -1,6 +1,6 @@
 {
   "name": "championinfo",
-  "version": "0.0.7-alpha",
+  "version": "0.0.8-alpha",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
     "build:publish": "node_modules/.bin/build --win -p always",

@@ -6,8 +6,9 @@
       </v-tab>
       <v-tab-item v-for="(champion,index) in championsinfo" :key="index">
         <br>
+        <h3>Champion: {{champion.name}}</h3>
         <h3>Runes:</h3>
-        <img  class="images-runes " v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
+        <img  class="imagesrunes " v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
         <div>
           <h3>Items:</h3>
           <div class="items">
@@ -33,23 +34,18 @@ export default {
             runes: [],
             items:[],
             skills:[],
-            mapIcon: {"8000":"Precision.png","8005":"PressTheAttack.png","8008":"FlowofBattleTemp.png","8009":"LastResortIcon.png","8010":"Conqueror.png","8014":"CoupDeGrace.png","8017":"CutDown.png","8021":"FleetFootwork.png","8100":"Domination.png","8105":"RelentlessHunter.png","8112":"Electrocute.png","8120":"GhostPoro.png","8124":"Predator.png","8126":"CheapShot.png","8128":"DarkHarvest.png","8134":"IngeniousHunter.png","8135":"RavenousHunter.png","8136":"ZombieWard.png","8138":"EyeballCollection.png","8139":"GreenTerror_TasteOfBlood.png","8143":"SuddenImpact.png","8200":"Sorcery.png","8210":"Transcendence.png","8214":"SummonAery.png","8224":"Pokeshield.png","8226":"ManaflowBand.png","8229":"ArcaneComet.png","8230":"PhaseRush.png","8232":"Waterwalking.png","8233":"AbsoluteFocus.png","8234":"CelerityTemp.png","8236":"GatheringStorm.png","8237":"Scorch.png","8242":"Unflinching.png","8243":"TheUltimateHat.png","8299":"LastStand.png","8300":"Inspiration.png","8304":"MagicalFootwear.png","8306":"HextechFlashtraption.png","8313":"PerfectTiming.png","8316":"MinionDematerializer.png","8321":"FuturesMarket.png","8326":"UnsealedSpellbook.png","8345":"BiscuitDelivery.png","8347":"CosmicInsight.png","8351":"GlacialAugment.png","8352":"TimeWarpTonic.png","8359":"Kleptomancy.png","8400":"Resolve.png","8410":"ApproachVelocity.png","8429":"Conditioning.png","8437":"GraspOfTheUndying.png","8439":"VeteranAftershock.png","8444":"SecondWind.png","8446":"Demolish.png","8451":"Overgrowth.png","8453":"Revitalize.png","8463":"FontOfLife.png","8465":"Guardian.png","8472":"Chrysalis.png","8473":"BonePlating.png","9101":"Overheal.png","9103":"Legend_Infamy.png","9104":"Legend_Heroism.png","9105":"Legend_Tenacity.png","9111":"DangerousGame.png"}
+            mapIcon: {"8000":"Precision.png","8005":"PressTheAttack.png","8008":"FlowofBattleTemp.png","8009":"LastResortIcon.png","8010":"Conqueror.png","8014":"CoupDeGrace.png","8017":"CutDown.png","8021":"FleetFootwork.png","8100":"Domination.png","8105":"RelentlessHunter.png","8112":"Electrocute.png","8120":"GhostPoro.png","8124":"Predator.png","8126":"CheapShot.png","8128":"DarkHarvest.png","8134":"IngeniousHunter.png","8135":"RavenousHunter.png","8136":"ZombieWard.png","8138":"EyeballCollection.png","8139":"GreenTerror_TasteOfBlood.png","8143":"SuddenImpact.png","8200":"Sorcery.png","8210":"Transcendence.png","8214":"SummonAery.png","8224":"Pokeshield.png","8226":"ManaflowBand.png","8229":"ArcaneComet.png","8230":"PhaseRush.png","8232":"Waterwalking.png","8233":"AbsoluteFocus.png","8234":"CelerityTemp.png","8236":"GatheringStorm.png","8237":"Scorch.png","8242":"Unflinching.png","8243":"TheUltimateHat.png","8299":"LastStand.png","8300":"Inspiration.png","8304":"MagicalFootwear.png","8306":"HextechFlashtraption.png","8313":"PerfectTiming.png","8316":"MinionDematerializer.png","8321":"FuturesMarket.png","8326":"UnsealedSpellbook.png","8345":"BiscuitDelivery.png","8347":"CosmicInsight.png","8351":"GlacialAugment.png","8352":"TimeWarpTonic.png","8359":"Kleptomancy.png","8360":"UnsealedSpellbook.png","8400":"Resolve.png","8410":"ApproachVelocity.png","8429":"Conditioning.png","8437":"GraspOfTheUndying.png","8439":"VeteranAftershock.png","8444":"SecondWind.png","8446":"Demolish.png","8451":"Overgrowth.png","8453":"Revitalize.png","8463":"FontOfLife.png","8465":"Guardian.png","8472":"Chrysalis.png","8473":"BonePlating.png","9101":"Overheal.png","9103":"Legend_Infamy.png","9104":"Legend_Heroism.png","9105":"Legend_Tenacity.png","9111":"DangerousGame.png"}
         };
     },
     async created() { 
-        if(!localStorage.getItem("mapIcon")){
-            await this.getRunesInfo();            
-        }else{
-            this.mapIcon = JSON.parse(localStorage.getItem("mapIcon"));
-            await this.getrunes();
-        }
+        await this.getRunesInfo();            
+        await this.getrunes();
         if (this.$route.params.role){
           for (const key in this.championsinfo) {
             if (this.championsinfo.hasOwnProperty(key)) {
               if(this.championsinfo[key].role == this.$route.params.role){
                 this.role = key.toString();
               }
-              
             }
           }
         }else{
@@ -144,7 +140,6 @@ export default {
             this.mapIcon["8300"] = "Inspiration.png";
             this.mapIcon["8400"] = "Resolve.png";
             localStorage.setItem("mapIcon",JSON.stringify(this.mapIcon));
-            this.getrunes();
           } catch (e) {
               console.log(e)
           }
@@ -173,7 +168,8 @@ export default {
 .infocomponent{
   margin: 50px 20px;
 }
-.images-runes{
-  size:40px;
+.imagesrunes{
+  width:80px;
+  height: 80px;
 }
 </style>

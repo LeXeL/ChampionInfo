@@ -17,17 +17,7 @@
 <script>
 import electron from 'electron'
     export default {
-        methods:{
-            Refresh(){
-                localStorage.clear();
-                this.$router.go('/')
-            }
-        },
-        computed:{
-            localVersion(){
-                return this.$store.state.localVersion
-            }
-        },
+        methods:{},
         methods:{
             closeWindows(){
                 electron.remote.getCurrentWindow().close()
