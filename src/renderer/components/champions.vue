@@ -19,27 +19,19 @@
 export default {
     data() {
         return {
-        champions: [],
-        localVersion: "",
-        name: "",
-        lolcurrentVersion:''
+            name: ""
         };
     },
     async created() {
         try {
-            let data = await this.$http.get("https://ddragon.leagueoflegends.com/api/versions.json")
-            let tempsplit = data.body[0].split('.');
-            this.lolcurrentVersion = data.body[0];
-            this.localVersion = JSON.parse(localStorage.getItem("Version") || '0');
-            // console.log(`Local Version: ${this.localVersion} -> LolCurrentVersion: ${this.lolcurrentVersion}`)
-            if(parseInt(this.localVersion) <= parseInt(tempsplit.join(''))){
-                this.localVersion = this.lolcurrentVersion;
-                localStorage.setItem("Version",JSON.stringify(this.lolcurrentVersion));
-                this.$store.commit('setVersion',this.localVersion)
-                this.getChampions();
-            }else{
-                this.getChampions();
+            await this.$store.dispatch('getLoLCurrentVersion');
+            let lolCurrentVersion = this.$store.state.lolVersion;
+            let tempsplit = lolCurrentVersion.split('.');
+            let localVersion = this.$store.state.localVersion || '0';
+            if(parseInt(localVersion) <= parseInt(tempsplit.join(''))){
+                this.$store.commit('setLocalVersion',lolCurrentVersion)
             }
+            this.getChampions();
         } catch (e) {
             console.log(e)   
         }
@@ -47,17 +39,7 @@ export default {
     },
     methods: {
         async getChampions(){
-            if (!localStorage.getItem("Champions")) {
-                try {
-                    let data = await this.$http.get("http://ddragon.leagueoflegends.com/cdn/" +this.localVersion +"/data/en_US/champion.json")
-                    this.champions = data.body.data;
-                    localStorage.setItem("Champions",JSON.stringify(this.champions));
-                } catch (e) {
-                    console.log(e)
-                }
-            }else{
-                this.champions = JSON.parse(localStorage.getItem("Champions"));
-            }
+            await this.$store.dispatch('getChampionInfo')
         }
     },
     computed: {
@@ -66,7 +48,14 @@ export default {
                 let re = new RegExp('(.)*' + this.name.toUpperCase() + '(.)*');
                 return re.exec(key.toUpperCase());
             });
+        },
+        champions: function(){
+            return this.$store.state.champions
+        },
+        localVersion: function(){
+            return this.$store.state.localVersion
         }
+
     }
 };
 </script>

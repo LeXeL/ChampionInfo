@@ -1,22 +1,23 @@
-# championinfo
+# ChampionInfo
 
-> A ChampionGG GUI
+ChampionInfo is an open source program for League of Legends program that will help you picking up your build for an specific champion in a specific role.
 
-#### Build Setup
+Its and Electron + Vue project that kept growing!
 
-``` bash
-# install dependencies
-npm install
+**NOTE:** This application is only avaliable on windows!
 
-# serve with hot reload at localhost:9080
-npm run dev
+![alt text](https://i.imgur.com/tBQLADl.png,"GUI")
 
-# build electron application for production
-npm run build
+#### Download
+[Click Here](https://github.com/LeXeL/ChampionInfo/releases)
 
+## Features
 
-```
+1. It feeds its data directly from League of Legends
+2. All Runes and Builds are gathered from [Champion.gg](https://champion.gg)
+3. It has AutoUpdate!
+4. List of Champions that have the best win rate %
+5. It's Free!
 
----
-
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[7c4e3e9](https://github.com/SimulatedGREG/electron-vue/tree/7c4e3e90a772bd4c27d2dd4790f61f09bae0fcef) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+## ScreenShots
+[Here](https://imgur.com/a/6DztsJ5)

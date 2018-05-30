@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="topwinrate">
         <v-container text-xs-center class="buttons">
             <v-layout>
                 <v-flex>
@@ -138,5 +138,4 @@ a:visited {
 a:hover {
     color: white;
 }
-
 </style>

@@ -12,18 +12,30 @@
         v-model="drawer"
         temporary
         absolute
+        app class="pa-0"
         >
-        <v-list class="pt-0" dense>
-        <br>
-        <v-list-tile v-for="item in items" :key="item.title" @click="$router.push(item.to)">
-            <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile-content>
-        </v-list-tile>
-        </v-list>
+        <v-layout column fill-height>
+            <v-list>
+            <br>
+                <v-list-tile v-for="item in items" :key="item.title" @click="$router.push(item.to)">
+                    <v-list-tile-action>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
+            <v-spacer></v-spacer>            
+            <v-list>
+                <v-list-tile>
+                    <v-list-tile-content>
+                        <h4>LoL Current Version: {{localVersion}}</h4>
+                        <h3>Made by: <a class='board-item-a' :href="'https://github.com/LeXeL'" target='_blank'>LeXeL</a></h3> 
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
+        </v-layout>   
         </v-navigation-drawer>  
     </div>
 </template>
@@ -41,6 +53,11 @@ import electron from 'electron'
                 ],
             }
         },
+        computed:{
+            localVersion(){
+                return this.$store.state.localVersion
+            }
+        },
         mounted(){
             electron.ipcRenderer.on('status', (event, data) => {
                 if(data){
@@ -49,8 +66,12 @@ import electron from 'electron'
                     this.status = "You got the newest Version :)"
                 }
             })
-        },
-        methods:{
+            this.$el.querySelectorAll('.board-item-a').forEach(a => {
+                a.addEventListener('click', (e) => {
+                e.preventDefault()
+                electron.shell.openExternal(e.target.href)
+                })
+            })
         }
     }
 </script>
