@@ -46,7 +46,7 @@ export default {
         ChampionName: function(){
             return this._.pickBy(this.champions,(value,key)=>{
                 let re = new RegExp('(.)*' + this.name.toUpperCase() + '(.)*');
-                return re.exec(key.toUpperCase());
+                return re.exec(this.champions[key].name.toUpperCase());
             });
         },
         champions: function(){

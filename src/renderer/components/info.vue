@@ -68,7 +68,7 @@ export default {
         for (const key in champion) {
           if (champion.hasOwnProperty(key)) {
             if(champion[key].key == this.key){
-              return champion[key].id
+              return champion[key].name
             }
             
           }
