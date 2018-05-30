@@ -13,11 +13,11 @@ Its and Electron + Vue project that kept growing!
 
 ## Features
 
-1. It feeds its data directly from League of Legends
-2. All Runes and Builds are gathered from [Champion.gg](https://champion.gg)
-3. It has AutoUpdate!
-4. List of Champions that have the best win rate %
-5. It's Free!
++ It feeds its data directly from League of Legends
++ All Runes and Builds are gathered from [Champion.gg](https://champion.gg)
++ It has AutoUpdate!
++ List of Champions that have the best win rate %
++ It's Free!
 
 ## ScreenShots
 [Here](https://imgur.com/a/6DztsJ5)
