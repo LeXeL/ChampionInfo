@@ -149,7 +149,7 @@ export default {
         },
         async getRunesInfo(){
           try {
-            let data = await this.$http.get("http://ddragon.leagueoflegends.com/cdn/8.8.1/data/en_US/runesReforged.json")
+            let data = await this.$http.get(`http://ddragon.leagueoflegends.com/cdn/${this.localVersion}/data/en_US/runesReforged.json`)
             data.body.forEach(rune => {
             let icon = rune.icon.split("/");
               this.mapIcon[rune.id.toString()] = icon[icon.length - 1];
@@ -159,7 +159,7 @@ export default {
             this.mapIcon["8200"] = "Sorcery.png";
             this.mapIcon["8300"] = "Inspiration.png";
             this.mapIcon["8400"] = "Resolve.png";
-            localStorage.setItem("mapIcon",JSON.stringify(this.mapIcon));
+            console.log(this.mapIcon)
           } catch (e) {
               console.log(e)
           }
