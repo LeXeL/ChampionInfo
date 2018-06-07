@@ -9,7 +9,7 @@
       </v-tab>
       <v-tab-item v-for="(champion,index) in championsinfo" :key="index">
         <br>
-        <h1>Champion: {{championName}}</h1>
+        <h1>Champion: {{championName}} <v-avatar><img :src="'http://ddragon.leagueoflegends.com/cdn/'+ localVersion +'/img/champion/'+ championAvatar.full " alt=""></v-avatar></h1>
         <h3>Runes:</h3>
         <img  class="imagesrunes " v-for="runes in champion.runes" :key="runes" v-bind:src="getPic(runes)">
         <div>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -75,6 +77,17 @@ export default {
           }
         }
       }
+    },
+    championAvatar(){
+      let champion = this.$store.state.champions;
+      for (const key in champion) {
+        if (champion.hasOwnProperty(key)) {
+          if (champion[key].key == this.key) {
+            return champion[key].image;
+          }
+          
+        }
+      }
     }
   },
   methods: {
@@ -86,7 +99,7 @@ export default {
       }
     },
     setSkills(data) {
-      data.body.forEach(e => {
+      data.forEach(e => {
         if (e.hashes.skillorderhash) {
           this.skills = [];
           let splitSkills;
@@ -112,7 +125,7 @@ export default {
       });
     },
     setRunes(data) {
-      data.body.forEach(e => {
+      data.forEach(e => {
         if (e.hashes.runehash) {
           this.runes = [];
           let splitRunes;
@@ -129,7 +142,7 @@ export default {
       });
     },
     setItems(data) {
-      data.body.forEach(e => {
+      data.forEach(e => {
         if (e.hashes.finalitemshashfixed) {
           this.items = [];
           let splitItems;
@@ -162,7 +175,7 @@ export default {
             this.localVersion
           }/data/en_US/runesReforged.json`
         );
-        data.body.forEach(runeSlot => {
+        data.data.forEach(runeSlot => {
           runeSlot.slots.forEach(rune => {
             rune.runes.forEach(element => {
               let icon = element.icon.split("/");
@@ -190,10 +203,10 @@ export default {
             }
           }
         );
-        if (data.body.length != 0) {
-          this.setRunes(data);
-          this.setItems(data);
-          this.setSkills(data);
+        if (data.data.length != 0) {
+          this.setRunes(data.data);
+          this.setItems(data.data);
+          this.setSkills(data.data);
         } else {
           this.message = true;
         }

@@ -29,6 +29,10 @@ export default new Router({
     {
         path:'/topwinrate',
         component:topwinrate
+    },
+    {
+      path:'/update',
+      component:info
     }
   ]
 })
