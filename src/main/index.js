@@ -22,6 +22,10 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
+  // setInterval(() => {
+  //   let num = Math.random()*100
+  //   sendStatusToWindow('Complete '+num.toFixed(2))
+  // }, 500); //Debug purposes so I can manualy trigger events...
   ipcMain.on('Update',()=>{
     log.info("Update Request recieve")
     autoUpdater.quitAndInstall();  
