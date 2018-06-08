@@ -15,7 +15,7 @@
                     {{ value }}
                 </v-progress-circular>
                 <span v-if="!buttonShow" style="margin-right:10px; margin-left:15px;">{{status}}</span>
-                <v-btn @click.native="installUpdate" v-if="buttonShow" color="teal">Install New Update</v-btn>
+                <v-btn @click.native.stop="dialog = true" v-if="buttonShow" color="teal">Install New Update</v-btn>
         </v-footer> 
         <v-navigation-drawer
         style="position:fixed; top:0; left:0; overflow-y:scroll;"
@@ -47,7 +47,7 @@
             </v-list>
         </v-layout>   
         </v-navigation-drawer>  
-        <updateComponent @click.native="installUpdate"></updateComponent>
+        <updateComponent :dialog.sync="dialog"></updateComponent>
     </div>
 </template>
 
@@ -58,8 +58,9 @@ import updateComponent from '../components/update.vue'
         data(){
             return{
                 value: 0,
+                show:false,
                 buttonShow:false,
-                show: false,
+                dialog: false,
                 drawer: null,
                 status : 'Checking for update...',
                 items: [
