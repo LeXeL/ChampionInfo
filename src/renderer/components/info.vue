@@ -20,6 +20,7 @@
         </div>
         <h3>Skills:</h3>
         <span v-for="(skills,index) in champion.skills" :key="index" class="headline">{{skills}}<span v-if="index+1 < champion.skills.length ">-></span></span>
+        <!-- <a class="board-item-a" target='_blank' :href="`http://champion.gg/champion/${championId}/${champion.role}`">Check out the Complete page on Champion.gg</a> -->
       </v-tab-item>
     </v-tabs>
     <v-btn @click="$router.go(-1)" class="btn">Go Back</v-btn>
@@ -28,6 +29,7 @@
 
 <script>
 import axios from 'axios'
+import electron from 'electron'
 
 export default {
   data() {
@@ -42,6 +44,14 @@ export default {
       message: false,
       mapIcon: {"8243":"TheUltimateHat.png"}
     };
+  },
+  mounted(){
+    this.$el.querySelectorAll('.board-item-a').forEach(a => {
+                a.addEventListener('click', (e) => {
+                e.preventDefault()
+                electron.shell.openExternal(e.target.href)
+                })
+            })
   },
   async created() {
     await this.getRunesInfo();
@@ -74,6 +84,16 @@ export default {
         if (champion.hasOwnProperty(key)) {
           if (champion[key].key == this.key) {
             return champion[key].name;
+          }
+        }
+      }
+    },
+    championId() {
+      let champion = this.$store.state.champions;
+      for (const key in champion) {
+        if (champion.hasOwnProperty(key)) {
+          if (champion[key].key == this.key) {
+            return key
           }
         }
       }

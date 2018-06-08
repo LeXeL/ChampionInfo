@@ -115,7 +115,7 @@ import updateComponent from '../components/modals/update.vue'
 <style scoped>
 .board-item-a{
     text-decoration: none;
-    color: teal
+    color: teal;
 }
 
 </style>
