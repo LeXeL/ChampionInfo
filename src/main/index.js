@@ -1,7 +1,6 @@
 const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
-const EventEmitter = require('events')
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -23,6 +22,10 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
+  ipcMain.on('Update',()=>{
+    log.info("Update Request recieve")
+    autoUpdater.quitAndInstall();  
+  })
   mainWindow = new BrowserWindow({
     height: 720,
     useContentSize: true,
@@ -34,6 +37,7 @@ function createWindow () {
     mainWindow = null
   })
 }
+
 
 app.on('ready', createWindow)
 
@@ -51,29 +55,18 @@ autoUpdater.on('update-available', (info) => {
   sendStatusToWindow('Update available.');
 })
 autoUpdater.on('update-not-available', (info) => {
-  sendStatusToWindow('You got the last Version :)');
+  sendStatusToWindow('Updated');
 })
 autoUpdater.on('error', (err) => {
   sendStatusToWindow('Error in update');
 })
 autoUpdater.on('download-progress', (progressObj) => {
-  // log_message = "Download speed: " + progressObj.bytesPerSecond;
   let log_message = 'Downloaded ' + progressObj.percent.toFixed(2) + '%';
-  // log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
   sendStatusToWindow(log_message);
 })
 autoUpdater.on('update-downloaded', (info) => {
-  sendStatusToWindow('Update downloaded; will install in 5 seconds');
+  sendStatusToWindow('Complete download');
 });
-
-autoUpdater.on('update-downloaded', (info) => {
-  // Wait 5 seconds, then quit and install
-  // In your application, you don't need to wait 5 seconds.
-  // You could call autoUpdater.quitAndInstall(); immediately
-  setTimeout(function() {
-    autoUpdater.quitAndInstall();  
-  }, 5000)
-})
 
 app.on('activate', () => {
   if (mainWindow === null) {
@@ -82,7 +75,7 @@ app.on('activate', () => {
 })
 
 app.on('ready', () => {
-  setTimeout(()=>{
+  setInterval(()=>{
     autoUpdater.checkForUpdates()
-  },2000)
+  },20000)
 })

@@ -5,7 +5,19 @@
                 <v-icon class="icon grey--text text--darken-3">reorder</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-                <span style="margin-right:10px;">{{status}}</span>
+                <a class='board-item-a' :href="'http://champion.gg'" target='_blank'>Champion.GG</a>
+            <v-spacer></v-spacer>
+                <v-progress-circular v-if="show"
+                    :size="35"
+                    :width="3"
+                    :rotate="-90"
+                    :value="value"
+                    color="teal"
+                    >
+                    {{ value }}
+                </v-progress-circular>
+                <span v-if="!buttonShow" style="margin-right:10px; margin-left:15px;">{{status}}</span>
+                <v-btn @click.native.stop="dialog = true" v-if="buttonShow" color="teal">Install New Update</v-btn>
         </v-footer> 
         <v-navigation-drawer
         style="position:fixed; top:0; left:0; overflow-y:scroll;"
@@ -37,21 +49,30 @@
             </v-list>
         </v-layout>   
         </v-navigation-drawer>  
+        <updateComponent :dialog.sync="dialog"></updateComponent>
     </div>
 </template>
 
 <script>
 import electron from 'electron'
+import updateComponent from '../components/update.vue'
     export default {
         data(){
             return{
+                value: 0,
+                show:false,
+                buttonShow:false,
+                dialog: false,
                 drawer: null,
-                status : 'Checking for updates...',
+                status : 'Checking for update...',
                 items: [
                     { title: 'Home', icon: 'dashboard', to:'/' },
                     { title: 'Top Winrate', icon: 'list' ,to:'/topwinrate' }
                 ],
             }
+        },
+        components:{
+            updateComponent
         },
         computed:{
             localVersion(){
@@ -60,10 +81,20 @@ import electron from 'electron'
         },
         mounted(){
             electron.ipcRenderer.on('status', (event, data) => {
-                if(data){
-                    this.status = data;
-                }else{
-                    this.status = "You got the newest Version :)"
+                let analyzer = data.split(' ')[0].toString();
+                if (analyzer == 'Downloaded'){
+                    this.show = true;
+                    this.value = parseInt(analyzer[1].split('.')[0]);
+                    this.status = 'Downloading...'
+                }
+                else if (analyzer == 'Complete'){
+                    this.show = false;
+                    this.buttonShow = true;
+                }
+                else{
+                    this.show = false;
+                    this.buttonShow = false;
+                    this.status = data
                 }
             })
             this.$el.querySelectorAll('.board-item-a').forEach(a => {
@@ -72,10 +103,19 @@ import electron from 'electron'
                 electron.shell.openExternal(e.target.href)
                 })
             })
+        },
+        methods:{
+            installUpdate(){
+                this.$emit('updateModal');
+            }
         }
     }
 </script>
 
 <style scoped>
+.board-item-a{
+    text-decoration: none;
+    color: teal
+}
 
 </style>

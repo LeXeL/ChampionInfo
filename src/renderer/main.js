@@ -3,7 +3,6 @@ import App from './App'
 
 import axios from 'axios'
 import VueLodash from 'vue-lodash'
-import VueResource from 'vue-resource'
 import Vue2Filters from 'vue2-filters'
 import Vuetify from 'vuetify'
 
@@ -15,12 +14,11 @@ import 'material-design-icons/iconfont/material-icons.css'
 
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-Vue.http = Vue.prototype.$http = axios
+Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 //Use package
 Vue.use(Vue2Filters);
-Vue.use(VueResource);
 Vue.use(VueLodash, { name: '_' });
 Vue.use(Vuetify);
 
