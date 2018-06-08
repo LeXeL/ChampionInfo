@@ -55,7 +55,7 @@
 
 <script>
 import electron from 'electron'
-import updateComponent from '../components/update.vue'
+import updateComponent from '../components/modals/update.vue'
     export default {
         data(){
             return{
