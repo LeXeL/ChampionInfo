@@ -77,5 +77,5 @@ app.on('activate', () => {
 app.on('ready', () => {
   setInterval(()=>{
     autoUpdater.checkForUpdates()
-  },5000)
+  },20000)
 })
