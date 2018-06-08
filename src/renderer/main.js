@@ -5,6 +5,7 @@ import axios from 'axios'
 import VueLodash from 'vue-lodash'
 import Vue2Filters from 'vue2-filters'
 import Vuetify from 'vuetify'
+import VueMarkdown from 'vue-markdown'
 
 import router from './router'
 import store from './store'
@@ -21,6 +22,7 @@ Vue.config.productionTip = false
 Vue.use(Vue2Filters);
 Vue.use(VueLodash, { name: '_' });
 Vue.use(Vuetify);
+Vue.use(VueMarkdown)
 
 //Filters
 

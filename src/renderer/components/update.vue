@@ -8,7 +8,7 @@
             Version: {{this.data.data[0].name}}
           </div>
           <div>
-            {{this.data.data[0].body | mdFilter}}
+            <vue-markdown>{{this.data.data[0].body }}</vue-markdown>
           </div>
         </v-card-text>
         <v-card-actions>
@@ -23,7 +23,12 @@
 
 <script>
 import electron from 'electron'
+import VueMarkdown from 'vue-markdown'
+
     export default {
+        components: {
+          VueMarkdown
+        },
         props:{
           dialog:Boolean
         },
@@ -34,12 +39,6 @@ import electron from 'electron'
             return {
               data:[]
             }
-        },
-        filters:{
-          mdFilter : function(data){
-            return data.split('##')[1]
-            
-          }
         },
         computed:{
           internalDialog(){
