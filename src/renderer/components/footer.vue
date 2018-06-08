@@ -103,11 +103,6 @@ import updateComponent from '../components/modals/update.vue'
                 electron.shell.openExternal(e.target.href)
                 })
             })
-        },
-        methods:{
-            installUpdate(){
-                this.$emit('updateModal');
-            }
         }
     }
 </script>
