@@ -5,6 +5,8 @@
                 <v-icon class="icon grey--text text--darken-3">reorder</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
+                <a class='board-item-a' :href="'http://champion.gg'" target='_blank'>Champion.GG</a>
+            <v-spacer></v-spacer>
                 <v-progress-circular v-if="show"
                     :size="35"
                     :width="3"
@@ -111,5 +113,9 @@ import updateComponent from '../components/update.vue'
 </script>
 
 <style scoped>
+.board-item-a{
+    text-decoration: none;
+    color: teal
+}
 
 </style>

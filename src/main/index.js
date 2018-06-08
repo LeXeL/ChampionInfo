@@ -1,7 +1,6 @@
 const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require("electron-updater");
-const EventEmitter = require('events')
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -69,15 +68,6 @@ autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Complete download');
 });
 
-// autoUpdater.on('update-downloaded', (info) => {
-//   // Wait 5 seconds, then quit and install
-//   // In your application, you don't need to wait 5 seconds.
-//   // You could call autoUpdater.quitAndInstall(); immediately
-//   setTimeout(function() {
-//     autoUpdater.quitAndInstall();  
-//   }, 5000)
-// })
-
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
@@ -85,8 +75,7 @@ app.on('activate', () => {
 })
 
 app.on('ready', () => {
-
-  setTimeout(()=>{
+  setInterval(()=>{
     autoUpdater.checkForUpdates()
-  },2000)
+  },5000)
 })
