@@ -24,6 +24,7 @@ const winURL = process.env.NODE_ENV === 'development'
 
 function createWindow () {
   ipcMain.on('Update',()=>{
+    log.info("Update Request recieve")
     autoUpdater.quitAndInstall();  
   })
   mainWindow = new BrowserWindow({
