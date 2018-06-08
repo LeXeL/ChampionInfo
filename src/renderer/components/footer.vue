@@ -47,11 +47,13 @@
             </v-list>
         </v-layout>   
         </v-navigation-drawer>  
+        <updateComponent @click.native="installUpdate"></updateComponent>
     </div>
 </template>
 
 <script>
 import electron from 'electron'
+import updateComponent from '../components/update.vue'
     export default {
         data(){
             return{
@@ -66,6 +68,9 @@ import electron from 'electron'
                 ],
             }
         },
+        components:{
+            updateComponent
+        },
         computed:{
             localVersion(){
                 return this.$store.state.localVersion
@@ -73,20 +78,17 @@ import electron from 'electron'
         },
         mounted(){
             electron.ipcRenderer.on('status', (event, data) => {
-                let analyzer = data.split(' ');
-                console.log(analyzer)
-                if (analyzer[0].toString() == 'Downloaded'){
+                let analyzer = data.split(' ')[0].toString();
+                if (analyzer == 'Downloaded'){
                     this.show = true;
                     this.value = parseInt(analyzer[1].split('.')[0]);
                     this.status = 'Downloading...'
-                    console.log("ebtra")
                 }
-                else if (analyzer[0].toString() == 'Complete'){
+                else if (analyzer == 'Complete'){
                     this.show = false;
                     this.buttonShow = true;
                 }
                 else{
-                    console.log("TAmbien entra aqui")
                     this.show = false;
                     this.buttonShow = false;
                     this.status = data
@@ -101,8 +103,7 @@ import electron from 'electron'
         },
         methods:{
             installUpdate(){
-                console.log("Entra")
-                electron.ipcRenderer.send("Update")
+                this.$emit('updateModal');
             }
         }
     }

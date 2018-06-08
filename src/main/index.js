@@ -23,18 +23,8 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
-  setTimeout(()=>{
-    var amount = Math.random()*100
-    sendStatusToWindow('Complete '+amount.toFixed(2))
-  },5000)
-  ipcMain.on('Update',(event,arg)=>{
-    let modal = new BrowserWindow({
-      modal:true,
-      parent:mainWindow,
-      width:400,
-      height:450,
-    })
-    modal.loadURL(winURL+'/update')
+  ipcMain.on('Update',()=>{
+    autoUpdater.quitAndInstall();  
   })
   mainWindow = new BrowserWindow({
     height: 720,

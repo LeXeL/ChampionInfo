@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import champions from "../components/champions.vue";
 import info from "../components/info.vue";
 import topwinrate from "../components/topwinrate.vue";
+import update from "../components/update.vue"
 
 
 Vue.use(Router)
@@ -29,10 +30,6 @@ export default new Router({
     {
         path:'/topwinrate',
         component:topwinrate
-    },
-    {
-      path:'/update',
-      component:info
     }
   ]
 })
