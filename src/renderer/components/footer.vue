@@ -81,13 +81,13 @@ import updateComponent from '../components/modals/update.vue'
         },
         mounted(){
             electron.ipcRenderer.on('status', (event, data) => {
-                let analyzer = data.split(' ')[0].toString();
-                if (analyzer == 'Downloaded'){
+                let analyzer = data.split(' ');
+                if (analyzer[0].toString() == 'Downloaded'){
                     this.show = true;
                     this.value = parseInt(analyzer[1].split('.')[0]);
                     this.status = 'Downloading...'
                 }
-                else if (analyzer == 'Complete'){
+                else if (analyzer[0].toString() == 'Complete'){
                     this.show = false;
                     this.buttonShow = true;
                 }
