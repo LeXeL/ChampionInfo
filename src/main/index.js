@@ -11,6 +11,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow;
+let updateDownloaded = false;
 
 function sendStatusToWindow(text) {
   log.info(text);
@@ -65,6 +66,7 @@ autoUpdater.on('download-progress', (progressObj) => {
   sendStatusToWindow(log_message);
 })
 autoUpdater.on('update-downloaded', (info) => {
+  updateDownloaded = true;
   sendStatusToWindow('Complete download');
 });
 
@@ -79,6 +81,8 @@ app.on('ready', () => {
     autoUpdater.checkForUpdates()
   },2000)
   setInterval(()=>{
-    autoUpdater.checkForUpdates()
+    if(!updateDownloaded){
+      autoUpdater.checkForUpdates()
+    }
   },600000)
 })
