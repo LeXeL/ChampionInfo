@@ -7,9 +7,9 @@ Its and Electron + Vue project that kept growing!
 **NOTE:** This application is only avaliable on windows!
 
 ![alt text](https://i.imgur.com/tBQLADl.png,"GUI")
-
-#### Download
+# Download
 [Click Here](https://github.com/LeXeL/ChampionInfo/releases)
+
 
 ## Features
 

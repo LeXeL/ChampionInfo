@@ -11,6 +11,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow;
+let updateDownloaded = false;
 
 function sendStatusToWindow(text) {
   log.info(text);
@@ -22,10 +23,6 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
-  // setInterval(() => {
-  //   let num = Math.random()*100
-  //   sendStatusToWindow('Complete '+num.toFixed(2))
-  // }, 500); //Debug purposes so I can manualy trigger events...
   ipcMain.on('Update',()=>{
     log.info("Update Request recieve")
     autoUpdater.quitAndInstall();  
@@ -69,6 +66,7 @@ autoUpdater.on('download-progress', (progressObj) => {
   sendStatusToWindow(log_message);
 })
 autoUpdater.on('update-downloaded', (info) => {
+  updateDownloaded = true;
   sendStatusToWindow('Complete download');
 });
 
@@ -79,7 +77,12 @@ app.on('activate', () => {
 })
 
 app.on('ready', () => {
-  setInterval(()=>{
+  setTimeout(()=>{
     autoUpdater.checkForUpdates()
-  },20000)
+  },2000)
+  setInterval(()=>{
+    if(!updateDownloaded){
+      autoUpdater.checkForUpdates()
+    }
+  },600000)
 })
